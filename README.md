@@ -1,8 +1,6 @@
 # proco-mcp
 
-**Proco MCP Server — financial tools for AI agents.**
-
-Wallets, payments, policies, and treasury exposed as a Model Context Protocol server. Drop into Claude Code, Codex, or any MCP-compatible framework and your agent can transact on-chain in five minutes.
+**Proco MCP Server — on-chain capital markets infrastructure as a Model Context Protocol server.** Capital accounts, settlement conditions, treasury controls, and programmable USDC flows — accessible to any MCP-compatible system in minutes.
 
 → [procohq.com](https://procohq.com)
 
@@ -14,16 +12,16 @@ Wallets, payments, policies, and treasury exposed as a Model Context Protocol se
 
 ---
 
-## What it gives an agent
+## What it exposes
 
-When connected, the MCP server exposes financial tools the agent can call directly:
+When connected, the MCP server exposes on-chain capital markets infrastructure as callable tools:
 
 - `wallet_create` · `wallet_get` · `wallet_balance`
 - `payment_create` · `payment_status`
 - `policy_set` · `policy_get` (`pay_when`, `pay_if`, `sweep_when`)
 - `treasury_get` · `treasury_rebalance`
 
-Each tool returns structured JSON; every action is non-custodial and signed by the agent's own wallet.
+Each tool returns structured JSON; every action is non-custodial and signed by the principal's own wallet across Hyperliquid, Base, and Solana.
 
 ---
 
@@ -64,4 +62,3 @@ Get an API key at [procohq.com/sign-in](https://procohq.com/sign-in) — free sa
 ## License
 
 MIT
-
