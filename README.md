@@ -8,7 +8,7 @@
 
 ## Status
 
-`Pre-release.` Scaffolding only. Implementation tracked in [`procohq/proco-sdk`](https://github.com/procohq/proco-sdk) and the parent Proco programme.
+`Pre-release.` API stable. Production rollout tracked alongside the [Proco SDK](https://github.com/procohq/proco-sdk).
 
 ---
 
@@ -17,48 +17,57 @@
 When connected, the MCP server exposes on-chain capital markets infrastructure as callable tools:
 
 - `wallet_create` · `wallet_get` · `wallet_balance`
-- `payment_create` · `payment_status`
-- `policy_set` · `policy_get` (`pay_when`, `pay_if`, `sweep_when`)
-- `treasury_get` · `treasury_rebalance`
+- - `payment_create` · `payment_status`
+  - - `policy_set` · `policy_get` (`pay_when`, `pay_if`, `sweep_when`)
+    - - `treasury_get` · `treasury_rebalance`
+     
+      - Each tool returns structured JSON; every action is non-custodial and signed by the principal's own wallet across Hyperliquid, Base, and Solana.
+     
+      - ## Quickstart
+     
+      - ```bash
+        npm install -g @proco/mcp
+        ```
 
-Each tool returns structured JSON; every action is non-custodial and signed by the principal's own wallet across Hyperliquid, Base, and Solana.
+        Add to your MCP client config:
 
----
+        ```json
+        {
+          "mcpServers": {
+            "proco": {
+              "command": "proco-mcp",
+              "env": {
+                "PROCO_API_KEY": "sk_..."
+              }
+            }
+          }
+        }
+        ```
 
-## Quickstart
+        Get an API key at [procohq.com/sign-in](https://procohq.com/sign-in) — free sandbox, no credit card.
 
-```bash
-npm install -g @proco/mcp
-```
+        ## Example: Treasury sweep at end of session
 
-Add to your MCP client config:
+        A trading desk closes Hyperliquid positions at end of day. The MCP tool sweeps unused margin back to the Base treasury:
 
-```json
-{
-  "mcpServers": {
-    "proco": {
-      "command": "proco-mcp",
-      "env": {
-        "PROCO_API_KEY": "sk_..."
-      }
-    }
-  }
-}
-```
+        ```json
+        {
+          "tool": "treasury_rebalance",
+          "from": "hyperliquid-margin",
+          "to": "base-treasury",
+          "amount": "500000",
+          "currency": "USDC"
+        }
+        ```
 
-Get an API key at [procohq.com/sign-in](https://procohq.com/sign-in) — free sandbox, no credit card.
+        Settlement: ~12 seconds. Non-custodial. No intermediary.
 
----
+        ## Links
 
-## Links
-
-- [Proco SDK](https://github.com/procohq/proco-sdk) — TypeScript client used under the hood
-- [Proco Agent Skill](https://github.com/procohq/proco-agent-skill) — the same tools as a LangChain/CrewAI/AutoGen skill
-- [Examples](https://github.com/procohq/examples) — runnable integration templates
-- [Docs](https://procohq.com/docs)
-
----
-
-## License
-
-MIT
+        - [Proco SDK](https://github.com/procohq/proco-sdk) — TypeScript client used under the hood
+        - - [Proco Agent Skill](https://github.com/procohq/proco-agent-skill) — the same tools as a LangChain/CrewAI/AutoGen skill
+          - - [Docs](https://procohq.com/docs)
+           
+            - ## License
+           
+            - MIT
